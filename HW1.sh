@@ -20,7 +20,7 @@ fi
 
 #download E. coli GFF file
 URL="https://ftp.ensemblgenomes.ebi.ac.uk/pub/bacteria/release-58/gff3/bacteria_0_collection/escherichia_coli_str_k_12_substr_mg1655_gca_000005845/Escherichia_coli_str_k_12_substr_mg1655_gca_000005845.ASM584v2.58.gff3.gz"      
-curl -s $URL > /work/gene8940/lml38336/homework_1/ecoli_MG1655.gff
+curl -s $URL | gunzip -c > /work/gene8940/lml38336/homework_1/ecoli_MG1655.gff
 
 #count protein-coding sequences
-grep -c "CDS" /work/gene8940/lml38336/homework_1/ecoli_MG1655.gff > /work/gene8940/lml38336/homework_1/results.txt
+grep -c protein_coding /work/gene8940/lml38336/homework_1/ecoli_MG1655.gff > /work/gene8940/lml38336/homework_1/results.txt
