@@ -51,3 +51,8 @@ bedtools getfasta -fi /work/gene8940/lml38336/homework_2/ecoli_MG1655.fasta -bed
 #generate fasta file for all non-CDS regions
 bedtools getfasta -fi /work/gene8940/lml38336/homework_2/ecoli_MG1655.fasta -bed /work/gene8940/lml38336/homework_2/ecoli_MG1655_intergenic.bed -fo /work/gene8940/lml38336/homework_2/ecoli_MG1655_intergenic.fasta
 
+#compute GC content for CDS regions
+faCount -summary /work/gene8940/lml38336/homework_2/ecoli_MG1655_CDS.fasta | awk '{print ($4 + $5)}' | tail -n 1 > /work/gene8940/lml38336/homework_2/ecoli_MG1655_CDS_GC.txt
+
+#compute GC content for non-CDS regions
+faCount -summary /work/gene8940/lml38336/homework_2/ecoli_MG1655_intergenic.fasta | awk '{print ($4 + $5)}' | tail -n 1 > /work/gene8940/lml38336/homework_2/ecoli_MG1655_intergenic_GC.txt
