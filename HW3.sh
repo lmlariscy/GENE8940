@@ -17,6 +17,7 @@ module load canu/2.2-GCCcore-11.2.0
 module load SPAdes/3.15.5-GCC-11.3.0
 module load QUAST/5.2.0-foss-2022a
 module load BWA/0.7.17-GCCcore-11.3.0
+module load MUMmer/4.0.0rc1-GCCcore-11.3.0
 
 #load PacBio data
 LONG="/work/gene8940/instructor_data/ecoli_p6_25x.filtered.fastq.gz"
@@ -41,3 +42,8 @@ spades.py -t 10 -k 21,33,55,77 --isolate --memory 24 --pe1-1 \ $OUTDIR/ecoli_ill
 
 #use QUAST to get quality statistics on canu assembly
 quast.py -o $OUTDIR/quast_canu_ecoli $OUTDIR/quast_spades_ecoli -t 10 -r $OUTDIR/GCA_000005845.fna \ $OUTDIR/canu_ecoli/ecoli.contigs.fasta $OUTDIR/spades_ecoli/ecoli.scaffolds.fasta
+
+#create mummer plot
+nucmer -t 10 $OUTDIR/GCA_000005845.fna $OUTDIR/canu_ecoli/ecoli.contigs.fasta -p canu_ecoli 
+delta-filter -1 canu_ecoli.delta > canu_ecoli_filter.delta
+mummerplot --size large -layout --color -f --png canu_ecoli.delta -p \ canu_ecoli
