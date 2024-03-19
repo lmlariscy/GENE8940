@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=homework_1  		                    # Job name
+#SBATCH --job-name=homework_2  		                    # Job name
 #SBATCH --partition=batch		                        # Partition (queue) name
 #SBATCH --ntasks=1			                            # Single task job
 #SBATCH --cpus-per-task=4		                        # Number of cores per task - match this to the num_threads used by BLAST
@@ -20,11 +20,11 @@ fi
 
 #download genome sequence and unzip
 FASTA="https://ftp.ensemblgenomes.ebi.ac.uk/pub/bacteria/release-58/fasta/bacteria_0_collection/escherichia_coli_str_k_12_substr_mg1655_gca_000005845/dna/Escherichia_coli_str_k_12_substr_mg1655_gca_000005845.ASM584v2.dna.chromosome.Chromosome.fa.gz"
-curl -s $FASTA | gunzip -c > /work/gene8940/lml38336/homework_2/ecoli_MG1655.fasta
+curl -s $FASTA | gunzip -c > $OUTDIR/ecoli_MG1655.fasta
 
 #download GFF3 annotation and unzip
 GFF="https://ftp.ensemblgenomes.ebi.ac.uk/pub/bacteria/release-58/gff3/bacteria_0_collection/escherichia_coli_str_k_12_substr_mg1655_gca_000005845/Escherichia_coli_str_k_12_substr_mg1655_gca_000005845.ASM584v2.58.chromosome.Chromosome.gff3.gz"
-curl -s $GFF | gunzip -c > /work/gene8940/lml38336/homework_2/ecoli_MG1655.gff
+curl -s $GFF | gunzip -c > $OUTDIR/ecoli_MG1655.gff
 
 #load modules
 module load BEDOPS/2.4.41-foss-2021b
@@ -33,34 +33,34 @@ module load SAMtools/1.14-GCC-11.2.0
 module load ucsc/443
 
 #convert GFF3 to BED
-convert2bed --input=gff < /work/gene8940/lml38336/homework_2/ecoli_MG1655.gff > /work/gene8940/lml38336/homework_2/ecoli_MG1655.bed
+convert2bed --input=gff < $OUTDIR/ecoli_MG1655.gff > $OUTDIR/ecoli_MG1655.bed
 
 #filter BED file for only CDS regions
-grep "ID=CDS" /work/gene8940/lml38336/homework_2/ecoli_MG1655.bed > /work/gene8940/lml38336/homework_1/ecoli_MG1655_CDS.bed
+grep "ID=CDS" $OUTDIR/ecoli_MG1655.bed > $OUTDIR/ecoli_MG1655_CDS.bed
 
 #create a genome index file for BEDtools
-samtools faidx /work/gene8940/lml38336/homework_2/ecoli_MG1655.fasta
-cut -f1,2 /work/gene8940/lml38336/homework_2/ecoli_MG1655.fasta.fai > /work/gene8940/lml38336/homework_2/ecoli_MG1655_lengths.txt
+samtools faidx $OUTDIR/ecoli_MG1655.fasta
+cut -f1,2 $OUTDIR/ecoli_MG1655.fasta.fai > $OUTDIR/ecoli_MG1655_lengths.txt
 
-#use CDS BED file to create complementary BED intervals  for non-CDS regions
-bedtools complement -i /work/gene8940/lml38336/homework_2/ecoli_MG1655_CDS.bed \ 
--g /work/gene8940/lml38336/homework_2/ecoli_MG1655_lengths.txt \
-> /work/gene8940/lml38336/homework_2/ecoli_MG1655_intergenic.bed
+#use CDS BED file to create complementary BED intervals for non-CDS regions
+bedtools complement -i $OUTDIR/ecoli_MG1655_CDS.bed \ 
+-g $OUTDIR/ecoli_MG1655_lengths.txt \
+> $OUTDIR/ecoli_MG1655_intergenic.bed
 
 #generate fasta file for all CDS regions
-bedtools getfasta -fi /work/gene8940/lml38336/homework_2/ecoli_MG1655.fasta \
--bed /work/gene8940/lml38336/homework_2/ecoli_MG1655_CDS.bed \
--fo /work/gene8940/lml38336/homework_2/ecoli_MG1655_CDS.fasta
+bedtools getfasta -fi $OUTDIR/ecoli_MG1655.fasta \
+-bed $OUTDIR/ecoli_MG1655_CDS.bed \
+-fo $OUTDIR/ecoli_MG1655_CDS.fasta
 
 #generate fasta file for all non-CDS regions
-bedtools getfasta -fi /work/gene8940/lml38336/homework_2/ecoli_MG1655.fasta \
--bed /work/gene8940/lml38336/homework_2/ecoli_MG1655_intergenic.bed \
--fo /work/gene8940/lml38336/homework_2/ecoli_MG1655_intergenic.fasta
+bedtools getfasta -fi $OUTDIR/ecoli_MG1655.fasta \
+-bed $OUTDIR/ecoli_MG1655_intergenic.bed \
+-fo $OUTDIR/ecoli_MG1655_intergenic.fasta
 
 #compute GC content for CDS regions
-faCount -summary /work/gene8940/lml38336/homework_2/ecoli_MG1655_CDS.fasta | awk '{print ($4 + $5)}' | tail -n 1 \
-> /work/gene8940/lml38336/homework_2/ecoli_MG1655_CDS_GC.txt
+faCount -summary $OUTDIR/ecoli_MG1655_CDS.fasta | awk '{print ($4 + $5)}' | tail -n 1 \
+> $OUTDIR/ecoli_MG1655_CDS_GC.txt
 
 #compute GC content for non-CDS regions
-faCount -summary /work/gene8940/lml38336/homework_2/ecoli_MG1655_intergenic.fasta | awk '{print ($4 + $5)}' | tail -n 1 \
-> /work/gene8940/lml38336/homework_2/ecoli_MG1655_intergenic_GC.txt
+faCount -summary $OUTDIR/ecoli_MG1655_intergenic.fasta | awk '{print ($4 + $5)}' | tail -n 1 \
+> $OUTDIR/ecoli_MG1655_intergenic_GC.txt
