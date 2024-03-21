@@ -41,9 +41,17 @@ canu -p ecoli -d $OUTDIR/canu_ecoli genomeSize=4.8m useGrid=false -pacbio-raw \ 
 spades.py -t 10 -k 21,33,55,77 --isolate --memory 24 --pe1-1 \ $OUTDIR/ecoli_illumina1.fastq.gz --pe1-2 $OUTDIR/ecoli_illumina2.fastq.gz -o $OUTDIR/spades_ecoli
 
 #use QUAST to get quality statistics on canu assembly
-quast.py -o $OUTDIR/quast_canu_ecoli $OUTDIR/quast_spades_ecoli -t 10 -r $OUTDIR/GCA_000005845.fna \ $OUTDIR/canu_ecoli/ecoli.contigs.fasta $OUTDIR/spades_ecoli/ecoli.scaffolds.fasta
+quast.py -o $OUTDIR/quast_canu_ecoli -t 10 -r $OUTDIR/GCA_000005845.fna \ $OUTDIR/canu_ecoli/ecoli.contigs.fasta 
 
-#create mummer plot
+#use QUAST to get quality statistics on spades assembly
+quast.py -o $OUTDIR/quast_spades_ecoli -t 10 -r $OUTDIR/GCA_000005845.fna \ $OUTDIR/spades_ecoli/scaffolds.fasta
+
+#create mummer plot for canu
 nucmer -t 10 $OUTDIR/GCA_000005845.fna $OUTDIR/canu_ecoli/ecoli.contigs.fasta -p canu_ecoli 
 delta-filter -1 canu_ecoli.delta > canu_ecoli_filter.delta
-mummerplot --size large -layout --color -f --png canu_ecoli.delta -p \ canu_ecoli
+mummerplot --size large -layout --color -f --png canu_ecoli_filter.delta -p \ canu_ecoli
+
+#create mummer plot for spades
+nucmer -t 10 $OUTDIR/GCA_000005845.fna $OUTDIR/spades_ecoli/contigs.fasta -p spades_ecoli 
+delta-filter -1 spades_ecoli.delta > spades_ecoli_filter.delta
+mummerplot --size large -layout --color -f --png spades_ecoli_filter.delta -p \ spades_ecoli
