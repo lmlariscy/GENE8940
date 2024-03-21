@@ -21,14 +21,14 @@ module load MUMmer/4.0.0rc1-GCCcore-11.3.0
 
 #load PacBio data
 LONG="/work/gene8940/instructor_data/ecoli_p6_25x.filtered.fastq.gz"
-cp $LONG $OUTDIR/ecoli_pacbio.fastq.gz 
+scp $LONG $OUTDIR/ecoli_pacbio.fastq.gz 
 
 #load Illumina data
 SHORT1="/work/gene8940/instructor_data/s_6_1.fastq.gz"
-cp $SHORT1 $OUTDIR/ecoli_illumina1.fastq.gz
+scp $SHORT1 $OUTDIR/ecoli_illumina1.fastq.gz
 
 SHORT2="/work/gene8940/instructor_data/s_6_2.fastq.gz"
-cp $SHORT2 $OUTDIR/ecoli_illumina2.fastq.gz
+scp $SHORT2 $OUTDIR/ecoli_illumina2.fastq.gz
 
 #load MG1655 reference genome
 REF="https://ftp.ensemblgenomes.ebi.ac.uk/pub/bacteria/release-58/fasta/bacteria_0_collection/escherichia_coli_str_k_12_substr_mg1655_gca_000005845/dna/Escherichia_coli_str_k_12_substr_mg1655_gca_000005845.ASM584v2.dna.chromosome.Chromosome.fa.gz"
@@ -49,9 +49,9 @@ quast.py -o $OUTDIR/quast_spades_ecoli -t 10 -r $OUTDIR/GCA_000005845.fna \ $OUT
 #create mummer plot for canu
 nucmer -t 10 $OUTDIR/GCA_000005845.fna $OUTDIR/canu_ecoli/ecoli.contigs.fasta -p canu_ecoli 
 delta-filter -1 canu_ecoli.delta > canu_ecoli_filter.delta
-mummerplot --size large -layout --color -f --png canu_ecoli_filter.delta -p \ canu_ecoli
+mummerplot --size large -layout --color -f --png canu_ecoli_filter.delta -p canu_ecoli
 
 #create mummer plot for spades
 nucmer -t 10 $OUTDIR/GCA_000005845.fna $OUTDIR/spades_ecoli/contigs.fasta -p spades_ecoli 
 delta-filter -1 spades_ecoli.delta > spades_ecoli_filter.delta
-mummerplot --size large -layout --color -f --png spades_ecoli_filter.delta -p \ spades_ecoli
+mummerplot --size large -layout --color -f --png spades_ecoli_filter.delta -p spades_ecoli
