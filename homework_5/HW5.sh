@@ -29,7 +29,7 @@ module load kallisto/0.48.0-gompi-2022a
 
 #download E. coli CDS fasta file
 CDS="https://ftp.ensemblgenomes.ebi.ac.uk/pub/bacteria/release-58/fasta/bacteria_0_collection/escherichia_coli_str_k_12_substr_mg1655_gca_000005845/cds/Escherichia_coli_str_k_12_substr_mg1655_gca_000005845.ASM584v2.cds.all.fa.gz"
-curl -s $CDS | gunzip -c > $OUTDIR/GCA_000005845_CDS.fa
+curl -s $CDS | gunzip -c > $OUTDIR/ecoli_MG1655_cds.fa
 
 #create kallisto index file from CDS file
 kallisto index -i $OUTDIR/ecoli_MG1655_cds.fa.idx $OUTDIR/ecoli_MG1655_cds.fa
