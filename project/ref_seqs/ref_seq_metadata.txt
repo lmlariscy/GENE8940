@@ -1,0 +1,9 @@
+Influenza ref seqs
+- strain: H5N1
+- clade: 2.3.4.4b
+
+SARS-CoV-2 ref seqs
+- clade: GRA
+
+RSV ref seqs
+- subtype: A
