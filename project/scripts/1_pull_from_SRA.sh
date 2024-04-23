@@ -7,7 +7,7 @@
 #SBATCH --time=2:00:00  		                        # Time limit hrs:min:sec
 #SBATCH --output=/work/gene8940/lml38336/log.%j			# Location of standard output and error log files (replace lml38336 with your myid)
 #SBATCH --mail-user=lml38336@uga.edu                    # Where to send mail (replace lml38336 with your myid)
-#SBATCH --mail-type=END,FAIL                            # Mail events (BEGIN, END, FAIL, ALL)
+#SBATCH --mail-type=BEGIN,END,FAIL                      # Mail events (BEGIN, END, FAIL, ALL)
 
 #This script pulls data from SRA using the accession number. 
 #Ideal to avoid transferring large files on to local computer
@@ -16,17 +16,23 @@
 module load SRA-Toolkit/3.0.3-gompi-2022a
 
 #Set working directory
-OUTDIR='/work/gene8940/lml38336/project/wastewater'
-
-#if output directory doesn't exist, create it
-if [ ! -d $OUTDIR ]
-then
-    mkdir -p $OUTDIR
-fi
+cd /work/gene8940/lml38336/project/wastewater
 
 #define directory
-output='$OUTDIR/raw_data'
-output2='$OUTDIR/raw_data/fastq'
+output='/work/gene8940/lml38336/project/wastewater/raw_data'
+output2='/work/gene8940/lml38336/project/wastewater/raw_data/fastq'
+
+#if output directory doesn't exist, create it
+if [ ! -d $output ]
+then
+    mkdir -p $output
+fi
+
+#if output directory doesn't exist, create it
+if [ ! -d $output2 ]
+then
+    mkdir -p $output2
+fi
 
 ##Pull data in a loop
 set -ueo pipefailx
