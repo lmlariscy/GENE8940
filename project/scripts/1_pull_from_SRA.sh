@@ -18,11 +18,17 @@
 module load SRA-Toolkit/3.0.3-gompi-2022a
 
 #Set working directory
-cd /file/path/to/working/directory
+OUTDIR='/work/gene8940/lml38336/project/wastewater'
+
+#if output directory doesn't exist, create it
+if [ ! -d $OUTDIR ]
+then
+    mkdir -p $OUTDIR
+fi
 
 #define directory
-output='file/path/to/Raw_data'
-output2='file/path/tp/Raw_data/fastq'
+output='$OUTDIR/raw_data'
+output2='$OUTDIR/raw_data/fastq'
 
 ##Pull data in a loop
 set -ueo pipefailx
