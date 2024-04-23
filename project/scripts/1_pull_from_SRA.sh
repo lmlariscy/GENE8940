@@ -32,7 +32,7 @@ then
 fi
 
 ##Pull data in a loop
-set -ueo pipefailx
+set -ueo pipefail
 SAMPLES="SRR15164810
 SRR15164811
 SRR15164812
