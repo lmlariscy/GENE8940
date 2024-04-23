@@ -13,10 +13,7 @@
 #Ideal to avoid transferring large files on to local computer
 # first step fetches the data and the second step splits it
 
-module load SRA-Toolkit/3.0.3-gompi-2022a
-
-#Set working directory
-cd /work/gene8940/lml38336/project/wastewater
+module load SRA-Toolkit/3.0.1-centos_linux64
 
 #define directory
 output='/work/gene8940/lml38336/project/wastewater/raw_data'
