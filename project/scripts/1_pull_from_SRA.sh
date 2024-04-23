@@ -1,15 +1,13 @@
 #!/bin/bash
-#SBATCH --job-name=Pull_data_SRA
-#SBATCH --partition=glenn_p
-#SBATCH --nodes=1
-#SBATCH --ntasks-per-node=12
-#SBATCH --mem=50gb
-#SBATCH --export=NONE
-#SBATCH --time=48:00:00
-#SBATCH --output=%x_%j.out
-#SBATCH --error=%x_%j.err
-#SBATCH --mail-user=mandyh@uga.edu
-#SBATCH --mail-type=BEGIN,END,FAIL
+#SBATCH --job-name=pull_ww_sra		                    # Job name
+#SBATCH --partition=batch		                        # Partition (queue) name
+#SBATCH --ntasks=1			                            # Single task job
+#SBATCH --cpus-per-task=4		                        # Number of cores per task - match this to the num_threads used by BLAST
+#SBATCH --mem=40gb			                            # Total memory for job
+#SBATCH --time=2:00:00  		                        # Time limit hrs:min:sec
+#SBATCH --output=/work/gene8940/lml38336/log.%j			# Location of standard output and error log files (replace lml38336 with your myid)
+#SBATCH --mail-user=lml38336@uga.edu                    # Where to send mail (replace lml38336 with your myid)
+#SBATCH --mail-type=END,FAIL                            # Mail events (BEGIN, END, FAIL, ALL)
 
 #This script pulls data from SRA using the accession number. 
 #Ideal to avoid transferring large files on to local computer
