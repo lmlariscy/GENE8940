@@ -10,7 +10,7 @@
 #SBATCH --mail-type=BEGIN,END,FAIL                      # Mail events (BEGIN, END, FAIL, ALL)
 
 #load modules
-module load Grinder/0.5.4-GCCcore-8.3.0-Perl-5.30.0
+module load Grinder/0.5.4-foss-2022a
 
 ##Will need to do this with each genome of interest
 
