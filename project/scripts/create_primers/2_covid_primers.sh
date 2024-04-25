@@ -15,7 +15,7 @@ cd /work/gene8940/lml38336/project/references/covid/primers
 #1
 echo ">SARS-COV-2_F1" >> covid_1.fas
 echo "AACAAACCAACCAACTTTCGATCTC" >> covid_1.fas
-echo ">SARS-COV-2_R#" >> covid_#.fas
+echo ">SARS-COV-2_R#" >> covid_1.fas
 echo "CTTCTACTAAGCCACAAGTGCCA" >> covid_1.fas
 
 #2
