@@ -20,10 +20,10 @@ module load Grinder/0.5.4-foss-2022a
 ###RSV
 genomes='/work/gene8940/lml38336/project/references/rsv/gisaid'
 ## this is the genomes that you will be using to simulate reads from
-input='/work/gene8940/lml38336/project/rsv/primers'
+input='/work/gene8940/lml38336/project/references/rsv/primers'
 ##inputs will be fasta files with the two primers that will essentially create the PCR
-output='/work/gene8940/lml38336/project/rsv/simulations'
-final_output='/work/gene8940/lml38336/project/rsv/simulations/final_sim_amp_reads'
+output='/work/gene8940/lml38336/project/references/rsv/simulations'
+final_output='/work/gene8940/lml38336/references/project/rsv/simulations/final_sim_amp_reads'
 
 
 ##Here we looping through the primers and generating fastqs
