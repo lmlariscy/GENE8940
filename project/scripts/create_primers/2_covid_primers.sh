@@ -1,13 +1,13 @@
 #!/bin/bash
-#SBATCH --job-name=create_rsv_primer_files              
-#SBATCH --partition=batch		                        
-#SBATCH --ntasks=1			                            
-#SBATCH --cpus-per-task=4		                        
-#SBATCH --mem=40gb			                            
-#SBATCH --time=2:00:00  		                       
-#SBATCH --output=/work/gene8940/lml38336/log.%j			
-#SBATCH --mail-user=lml38336@uga.edu                    
-#SBATCH --mail-type=BEGIN,END,FAIL 
+#SBATCH --job-name=create_covid_primer_files      
+#SBATCH --partition=batch  
+#SBATCH --ntasks=1                
+#SBATCH --cpus-per-task=4      
+#SBATCH --mem=40gb   
+#SBATCH --time=2:00:00
+#SBATCH --output=/work/gene8940/lml38336/log.%j
+#SBATCH --mail-user=lml38336@uga.edu              
+#SBATCH --mail-type=BEGIN,END,FAIL
 
 #set working directory
 cd /work/gene8940/lml38336/project/references/covid/primers
