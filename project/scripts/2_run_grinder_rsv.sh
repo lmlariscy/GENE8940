@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=pull_ww_sra		                    # Job name
+#SBATCH --job-name=simulate_reads_rsv	                # Job name
 #SBATCH --partition=batch		                        # Partition (queue) name
 #SBATCH --ntasks=1			                            # Single task job
 #SBATCH --cpus-per-task=4		                        # Number of cores per task - match this to the num_threads used by BLAST
