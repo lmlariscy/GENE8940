@@ -9,6 +9,9 @@
 #SBATCH --mail-user=lml38336@uga.edu                    
 #SBATCH --mail-type=BEGIN,END,FAIL                      
 
+#set working directory
+cd /work/gene8940/lml38336/project/references/rsv
+
 #load modules
 module load Grinder/0.5.4-foss-2022a
 
@@ -37,7 +40,7 @@ for y in {50,100,150}
 do
 for z in {1..5}
 do
-grinder -reference_file $genomes/EPI_ISL_19057389.fasta -forward_reverse $input/rsv_$i\.fasta -total_reads $x -read_dist $y -insert_dist 350 -mate_orientation FR -mutation_dist poly4 3e-3 3.3e-10 -qual_levels 38 10 -fastq_output 1 -output_dir $output/ -base_name rsv_a$i\_PE$y_$x\_$z
+grinder -reference_file $genomes/EPI_ISL_19057389.fasta -forward_reverse $input/rsv_$i\.fas -total_reads $x -read_dist $y -insert_dist 350 -mate_orientation FR -mutation_dist poly4 3e-3 3.3e-10 -qual_levels 38 10 -fastq_output 1 -output_dir $output/ -base_name rsv_a$i\_PE$y_$x\_$z
 done
 done
 done

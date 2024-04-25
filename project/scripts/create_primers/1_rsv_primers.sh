@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=simulate_reads_rsv	               
+#SBATCH --job-name=create_rsv_primer_files              
 #SBATCH --partition=batch		                        
 #SBATCH --ntasks=1			                            
 #SBATCH --cpus-per-task=4		                        
