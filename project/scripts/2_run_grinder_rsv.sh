@@ -23,7 +23,7 @@ genomes='/work/gene8940/lml38336/project/references/rsv/gisaid'
 input='/work/gene8940/lml38336/project/references/rsv/primers'
 ##inputs will be fasta files with the two primers that will essentially create the PCR
 output='/work/gene8940/lml38336/project/references/rsv/simulations'
-final_output='/work/gene8940/lml38336/project/references/rsv/simulations/final_sim_amp_reads'
+final_output='/work/gene8940/lml38336/project/references/rsv/final_sim_amp_reads'
 
 
 ##Here we looping through the primers and generating fastqs
@@ -40,20 +40,23 @@ for y in {50,100,150}
 do
 for z in {1..5}
 do
-grinder -reference_file $genomes/EPI_ISL_19057389.fasta -forward_reverse $input/rsv_$i\.fas -total_reads $x -read_dist $y -insert_dist 350 -mate_orientation FR -mutation_dist poly4 3e-3 3.3e-10 -qual_levels 38 10 -fastq_output 1 -output_dir $output/ -base_name rsv_a$i\_PE$y_$x\_$z
+grinder -reference_file $genomes/EPI_ISL_2584506.fasta -forward_reverse $input/rsv_$i\.fas -total_reads $x -read_dist $y -insert_dist 350 -mate_orientation FR -mutation_dist poly4 3e-3 3.3e-10 -qual_levels 38 10 -fastq_output 1 -output_dir $output/ -base_name rsv_$i\_PE$y\_$x\_$z
 done
 done
 done
 done
 
 ##here we combine the fastq files from different primer positions into one fastq file by number of reads, read length and replicate
+for i in {1..6}
+do
 for x in {5000,10000}
 do
 for y in {50,100,150}
 do
 for z in {1..5}
 do
-cat $output/rsv_a$i\_PE$y_$x\_$z\-reads.fastq > $final_output/rsv_a_PE$y_$x\_$z\-reads.fastq
+cat $output/rsv_$i\_PE$y\_$x\_$z\-reads.fastq > $final_output/rsv_PE$y\_$x\_$z\-reads.fastq
+done
 done
 done
 done
