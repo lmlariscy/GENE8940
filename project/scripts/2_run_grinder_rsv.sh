@@ -12,9 +12,6 @@
 #load modules
 module load Grinder/0.5.4-GCCcore-8.3.0-Perl-5.30.0
 
-#set working directory
-cd /work/gene8940/lml38336/project
-
 ##Will need to do this with each genome of interest
 
 ###RSV
