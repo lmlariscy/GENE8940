@@ -1,15 +1,13 @@
 #!/bin/bash
-#SBATCH --job-name=grinder_sim_reads_rsv
-#SBATCH --partition=batch
-#SBATCH --nodes=1
-#SBATCH --ntasks-per-node=12
-#SBATCH --mem=40gb
-#SBATCH --export=NONE
-#SBATCH --time=90:00:00
-#SBATCH --output=/work/gene8940/lml38336/log.%j		
-#SBATCH --error=/work/gene8940/lml38336/%x_%j.err
-#SBATCH --mail-user=lml38336@uga.edu
-#SBATCH --mail-type=BEGIN,END,FAIL
+#SBATCH --job-name=grinder_sim_reads_rsv	            # Job name
+#SBATCH --partition=batch		                        # Partition (queue) name
+#SBATCH --ntasks=12			                            # Single task job
+#SBATCH --cpus-per-task=4		                        # Number of cores per task - match this to the num_threads used by BLAST
+#SBATCH --mem=40gb			                            # Total memory for job
+#SBATCH --time=90:00:00  		                        # Time limit hrs:min:sec
+#SBATCH --output=/work/gene8940/lml38336/log.%j			# Location of standard output and error log files (replace lml38336 with your myid)
+#SBATCH --mail-user=lml38336@uga.edu                    # Where to send mail (replace lml38336 with your myid)
+#SBATCH --mail-type=BEGIN,END,FAIL                      # Mail events (BEGIN, END, FAIL, ALL)
 
 #load modules
 module load Grinder/0.5.4-GCCcore-8.3.0-Perl-5.30.0
@@ -20,7 +18,7 @@ cd /work/gene8940/lml38336/project
 ##Will need to do this with each genome of interest
 
 ###RSV
-genomes='/work/gene8940/lml38336/project/references/rsv'
+genomes='/work/gene8940/lml38336/project/references/rsv/gisaid'
 ## this is the genomes that you will be using to simulate reads from
 input='/work/gene8940/lml38336/project/rsv/primers'
 ##inputs will be fasta files with the two primers that will essentially create the PCR
