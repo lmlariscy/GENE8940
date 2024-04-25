@@ -23,7 +23,7 @@ genomes='/work/gene8940/lml38336/project/references/rsv/gisaid'
 input='/work/gene8940/lml38336/project/references/rsv/primers'
 ##inputs will be fasta files with the two primers that will essentially create the PCR
 output='/work/gene8940/lml38336/project/references/rsv/simulations'
-final_output='/work/gene8940/lml38336/references/project/rsv/simulations/final_sim_amp_reads'
+final_output='/work/gene8940/lml38336/project/references/rsv/simulations/final_sim_amp_reads'
 
 
 ##Here we looping through the primers and generating fastqs
