@@ -13,11 +13,11 @@
 
 module load seqtk/1.3-GCC-11.3.0
 
-cd /file/path/to/working/directory
+cd /work/gene8940/lml38336/project/wastewater/raw_data
 
 #define directory
-input='/file/path/to/wastewater_reads'
-output='/scratch/mandyh/WISER_InSilico/new_variant_detect/subset_reads'
+input='/work/gene8940/lml38336/project/wastewater/raw_data/fastq/combined'
+output='/work/gene8940/lml38336/project/wastewater/raw_data/subset_reads'
 
 ##This is where you subset reads from the SRA ww reads
 ##You will need to math out the proportion of wastewater reads that you will need in your simulated mixtures
@@ -27,5 +27,7 @@ output='/scratch/mandyh/WISER_InSilico/new_variant_detect/subset_reads'
 ## you might have to combine ww fq files before you can subset. 
 
 echo "x: $x, i: $i, z: $z"
-seqtk sample -s 10 $input/WW_R1.fq 500000 > $output/WW_500000_R1.fq
-seqtk sample -s 10 $input/WW_R2.fq 500000 > $output/WW_500000_R2.fq
+seqtk sample -s 10 $input/ww_R1.fq 495000 > $output/ww_495000_R1.fq
+seqtk sample -s 10 $input/ww_R2.fq 495000 > $output/ww_495000_R2.fq
+seqtk sample -s 10 $input/ww_R1.fq 490000 > $output/ww_490000_R1.fq
+seqtk sample -s 10 $input/ww_R2.fq 490000 > $output/ww_490000_R2.fq
