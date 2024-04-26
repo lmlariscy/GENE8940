@@ -13,13 +13,10 @@
 cd /work/gene8940/lml38336/project/references/flu/primers
 
 #1
-echo ">Uni12/Inf-1" >> flu_1.fas
-echo "GGGGGGAGCAAAAGCAGG" >> flu_1.fas
-echo ">Uni13/Inf-1" >> flu_1.fas
-echo "CGGGTTATTAGTAGAAACAAGG" >> flu_1.fas
+#modified original primers to remove overhang not found in reference genome 
+echo ">MBTuni-12" >> flu_1.fas
+echo "AGCAAAAGCAGG" >> flu_1.fas
+echo ">MBTuni-13" >> flu_1.fas
+echo "AGTAGAAACAAGG" >> flu_1.fas
 
-#2
-echo ">Uni12/Inf-3" >> flu_2.fas
-echo "GGGGGGAGCGAAAGCAGG" >> flu_2.fas
-echo ">Uni13/Inf-1" >> flu_2.fas
-echo "CGGGTTATTAGTAGAAACAAGG" >> flu_2.fas
+

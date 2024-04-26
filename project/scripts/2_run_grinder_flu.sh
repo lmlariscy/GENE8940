@@ -17,7 +17,7 @@ module load Grinder/0.5.4-foss-2022a
 
 ##Will need to do this with each genome of interest
 
-###RSV
+###flu
 genomes='/work/gene8940/lml38336/project/references/flu/gisaid'
 ## this is the genomes that you will be using to simulate reads from
 input='/work/gene8940/lml38336/project/references/flu/primers'
@@ -32,7 +32,7 @@ final_output='/work/gene8940/lml38336/project/references/flu/final_sim_amp_reads
 ## y loops through the different read lengths
 ## z loops through number of replicates - here we make 5
 ## these loops are puttings these attributes into the output name so that you can call upon them in the next steps
-for i in {1..2}
+for i in 1
 do
 for x in {5000,10000}
 do
@@ -47,7 +47,7 @@ done
 done
 
 ##here we combine the fastq files from different primer positions into one fastq file by number of reads, read length and replicate
-for i in {1..2}
+for i in 1
 do
 for x in {5000,10000}
 do
