@@ -47,7 +47,7 @@ done
 done
 
 ##here we combine the fastq files from different primer positions into one fastq file by number of reads, read length and replicate
-for i in {1..99}
+for i in {1..98} #primer sets 80 and 99 dropped out so i remove them here
 do
 for x in {5000,10000}
 do
@@ -55,7 +55,10 @@ for y in {50,100,150}
 do
 for z in {1..5}
 do
+    if [ "$i" -ne 80 ]
+    then
 cat $output/covid_$i\_PE$y\_$x\_$z\-reads.fastq > $final_output/covid_PE$y\_$x\_$z\-reads.fastq
+    fi
 done
 done
 done
