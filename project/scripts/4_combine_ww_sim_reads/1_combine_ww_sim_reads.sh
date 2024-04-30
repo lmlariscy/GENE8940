@@ -4,7 +4,7 @@
 #SBATCH --ntasks=1			                            
 #SBATCH --cpus-per-task=10		                        
 #SBATCH --mem=40gb			                            
-#SBATCH --time=90:00:00  		                       
+#SBATCH --time=2:00:00  		                       
 #SBATCH --output=/work/gene8940/lml38336/log.%j			
 #SBATCH --mail-user=lml38336@uga.edu                    
 #SBATCH --mail-type=BEGIN,END,FAIL  
