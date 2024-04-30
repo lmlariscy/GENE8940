@@ -1,0 +1,136 @@
+---
+title: "1_abundance_viz"
+author: "Leah Lariscy"
+date: "2024-04-30"
+output: html_document
+---
+
+# Load Packages
+
+```{r}
+library(tidyverse)
+library(here)
+library(ggthemes)
+```
+
+# Load Data
+
+```{r}
+# Set the directory where your .tsv files are located
+folder_path <- here("data/abundances")
+
+# Get a list of all .tsv files in the folder
+tsv_files <- list.files(folder_path, pattern = "\\.tsv$", 
+                        full.names = TRUE)
+
+# Load all .tsv files into a list of data frames
+list_of_dataframes <- lapply(tsv_files, read.delim)
+
+# Now you have a list where each element is a dataframe corresponding to each .tsv file
+```
+
+## Rename dataframes
+
+```{r}
+#pull dataframes out of list
+M1_PE100_1 <- list_of_dataframes[[1]]
+M1_PE100_2 <- list_of_dataframes[[2]]
+M1_PE100_3 <- list_of_dataframes[[3]]
+M1_PE100_4 <- list_of_dataframes[[4]]
+M1_PE100_5 <- list_of_dataframes[[5]]
+
+M1_PE150_1 <- list_of_dataframes[[6]]
+M1_PE150_2 <- list_of_dataframes[[7]]
+M1_PE150_3 <- list_of_dataframes[[8]]
+M1_PE150_4 <- list_of_dataframes[[9]]
+M1_PE150_5 <- list_of_dataframes[[10]]
+
+M1_PE50_1 <- list_of_dataframes[[11]]
+M1_PE50_2 <- list_of_dataframes[[12]]
+M1_PE50_3 <- list_of_dataframes[[13]]
+M1_PE50_4 <- list_of_dataframes[[14]]
+M1_PE50_5 <- list_of_dataframes[[15]]
+
+M2_PE100_1 <- list_of_dataframes[[16]]
+M2_PE100_2 <- list_of_dataframes[[17]]
+M2_PE100_3 <- list_of_dataframes[[18]]
+M2_PE100_4 <- list_of_dataframes[[19]]
+M2_PE100_5 <- list_of_dataframes[[20]]
+
+M2_PE150_1 <- list_of_dataframes[[21]]
+M2_PE150_2 <- list_of_dataframes[[22]]
+M2_PE150_3 <- list_of_dataframes[[23]]
+M2_PE150_4 <- list_of_dataframes[[24]]
+M2_PE150_5 <- list_of_dataframes[[25]]
+
+M2_PE50_1 <- list_of_dataframes[[26]]
+M2_PE50_2 <- list_of_dataframes[[27]]
+M2_PE50_3 <- list_of_dataframes[[28]]
+M2_PE50_4 <- list_of_dataframes[[29]]
+M2_PE50_5 <- list_of_dataframes[[30]]
+```
+
+## Wrangle
+
+```{r}
+#merge replicates
+M1_PE50 <- rbind(M1_PE50_1,M1_PE50_2,M1_PE50_3,M1_PE50_4,M1_PE50_5)
+M1_PE100 <- rbind(M1_PE100_1,M1_PE100_2,M1_PE100_3,M1_PE100_4,M1_PE100_5)
+M1_PE150 <- rbind(M1_PE150_1,M1_PE150_2,M1_PE150_3,M1_PE150_4,M1_PE150_5)
+
+M2_PE50 <- rbind(M2_PE50_1,M2_PE50_2,M2_PE50_3,M2_PE50_4,M2_PE50_5)
+M2_PE100 <- rbind(M2_PE100_1,M2_PE100_2,M2_PE100_3,M2_PE100_4,M2_PE100_5)
+M2_PE150 <- rbind(M2_PE150_1,M2_PE150_2,M2_PE150_3,M2_PE150_4,M2_PE150_5)
+```
+
+```{r}
+#create new variables before merging all dataframes
+M1_PE50 <- M1_PE50 %>% mutate(mixture = "M1",PE = 50)
+M1_PE100 <- M1_PE100 %>% mutate(mixture = "M1",PE = 100)
+M1_PE150 <- M1_PE150 %>% mutate(mixture = "M1",PE = 150)
+
+M2_PE50 <- M2_PE50 %>% mutate(mixture = "M2",PE = 50)
+M2_PE100 <- M2_PE100 %>% mutate(mixture = "M2",PE = 100)
+M2_PE150 <- M2_PE150 %>% mutate(mixture = "M2",PE = 150)
+```
+
+```{r}
+#merge all dataframes
+#then rename each pathogen in a new variable
+all_data <- rbind(M1_PE50,M1_PE100,M1_PE150,M2_PE50,M2_PE100,M2_PE150) %>% 
+  mutate(pathogen = ifelse(grepl("hCoV",target_id),"covid",target_id),
+         pathogen = ifelse(grepl("hRSV",target_id),"rsv",pathogen),
+         pathogen = ifelse(grepl("EPI",pathogen),"flu",pathogen))
+```
+
+```{r}
+#summarize abundance for each mixture, read length, and pathogen
+
+sum_data <- all_data %>% group_by(mixture,PE,pathogen) %>% 
+  summarize(sum_est_counts = sum(est_counts)/5,
+            sum_tpm = sum(tpm)/5)
+```
+
+# Visualize results
+
+```{r}
+sum_data %>% 
+  ggplot(aes(PE, sum_est_counts, fill=pathogen)) +
+  geom_col() +
+  facet_wrap(~ mixture) +
+  theme_clean() +
+  ylab("Average estimated counts") 
+
+ggsave(here("figures/estimated_counts.png"))
+```
+
+```{r}
+sum_data %>% 
+  ggplot(aes(PE, sum_tpm, fill=pathogen)) +
+  geom_col() +
+  facet_wrap(~ mixture) +
+  theme_clean() +
+  ylab("Average transcripts per million")
+
+ggsave(here("figures/TPM.png"))
+```
