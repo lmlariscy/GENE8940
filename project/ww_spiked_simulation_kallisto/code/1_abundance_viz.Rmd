@@ -98,9 +98,16 @@ M2_PE150 <- M2_PE150 %>% mutate(mixture = "M2",PE = 150)
 #merge all dataframes
 #then rename each pathogen in a new variable
 all_data <- rbind(M1_PE50,M1_PE100,M1_PE150,M2_PE50,M2_PE100,M2_PE150) %>% 
-  mutate(pathogen = ifelse(grepl("hCoV",target_id),"covid",target_id),
-         pathogen = ifelse(grepl("hRSV",target_id),"rsv",pathogen),
-         pathogen = ifelse(grepl("EPI",pathogen),"flu",pathogen))
+  mutate(pathogen = ifelse(grepl("19070571",target_id),"BA.1.1",target_id),
+         pathogen = ifelse(grepl("15358343",target_id),"BA.5.2.1",pathogen),
+         pathogen = ifelse(grepl("5713952",target_id),"AY.117",pathogen),
+         pathogen = ifelse(grepl("2584506",target_id),"RSV_B1",pathogen),
+         pathogen = ifelse(grepl("2584486",target_id),"RSV_B2",pathogen),
+         pathogen = ifelse(grepl("18980314",target_id),"RSV_A",pathogen),
+         pathogen = ifelse(grepl("18681129",pathogen),"H3N2_3C.2a1",pathogen),
+         pathogen = ifelse(grepl("19029202",pathogen),"H3N2_3C.3a1",pathogen),
+         pathogen = ifelse(grepl("19091253",pathogen),"H1N1",pathogen)) %>% 
+  filter(!grepl("EPI", pathogen))
 ```
 
 ```{r}
